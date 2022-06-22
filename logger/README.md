@@ -17,3 +17,17 @@ $ kubectl get pods
 ```
 $ kubectl logs -f <pod name>
 ```
+
+## Exercise 1.03
+
+```
+$ kubectl apply -f manifests/deployment.yaml
+```
+
+```
+$ kubectl get pods
+```
+
+```
+$ kubectl logs -f <pod name>
+```
