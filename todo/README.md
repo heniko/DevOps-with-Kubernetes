@@ -50,3 +50,11 @@ $ kubectl get pods
 ```
 $ kubectl logs -f <pod name>
 ```
+
+## Exercise 1.05
+
+```
+$ kubectl port-forward <pod name> 3000:3000
+```
+
+Navigating to [http://127.0.0.1:3000/](http://127.0.0.1:3000/) shows default Next.js app homepage.
