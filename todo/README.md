@@ -58,3 +58,19 @@ $ kubectl port-forward <pod name> 3000:3000
 ```
 
 Navigating to [http://127.0.0.1:3000/](http://127.0.0.1:3000/) shows default Next.js app homepage.
+
+## Exercise 1.06
+
+```
+$ k3d cluster create --port 8082:30080@agent:0 -p 8081:80@loadbalancer --agents 2
+```
+
+```
+$ kubectl apply -f manifests/deployment.yaml
+```
+
+```
+$ kubectl apply -f manifests/service.yaml
+```
+
+Navigating to [http://127.0.0.1:8082/](http://127.0.0.1:8082/) shows default Next.js app homepage.
