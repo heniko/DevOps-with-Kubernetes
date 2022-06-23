@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: logger-timestamper-ingress
+  labels:
+    name: logger-timestamper-ingress
+spec:
+  rules:
+    - http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: logger-timestamper-svc
+                port:
+                  number: 2345

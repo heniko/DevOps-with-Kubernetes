@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logger-timestamper-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: logger-timestamper-dep
+  template:
+    metadata:
+      labels:
+        app: logger-timestamper-dep
+    spec:
+      volumes:
+        - name: timestamp
+          emptyDir: {}
+      containers:
+        - name: timestamper
+          image: heniko/timestamper:v2.1
+          volumeMounts:
+            - name: timestamp
+              mountPath: /usr/src/app/files
+        - name: logger
+          image: heniko/logger:v2.2
+          volumeMounts:
+            - name: timestamp
+              mountPath: /usr/src/app/files
