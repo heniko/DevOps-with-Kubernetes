@@ -11,9 +11,12 @@ const s = uuid.v4()
 const dir = path.join('/', 'usr', 'src', 'app', 'files')
 const stampPath = path.join(dir, 'timestamp')
 
+const pongPath = path.join('/', 'usr', 'src', 'app', 'pingpong-count', 'count')
+
 let getMessage = () => {
   let time = fs.readFileSync(stampPath)
-  return `${time}: ${s}`
+  let pongs = fs.readFileSync(pongPath)
+  return `${time}: ${s}\nPing / Pongs: ${pongs}`
 }
 
 let interval = setInterval(() => {

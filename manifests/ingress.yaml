@@ -9,9 +9,16 @@ spec:
     - http:
         paths:
           - pathType: Prefix
-            path: /
+            path: /pingpong
             backend:
               service:
                 name: logger-timestamper-svc
                 port:
                   number: 2345
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: logger-timestamper-svc
+                port:
+                  number: 2346

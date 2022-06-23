@@ -15,14 +15,27 @@ spec:
       volumes:
         - name: timestamp
           emptyDir: {}
+        - name: pingpong-count
+          persistentVolumeClaim:
+            claimName: pingpong-claim
       containers:
         - name: timestamper
           image: heniko/timestamper:v2.1
           volumeMounts:
             - name: timestamp
               mountPath: /usr/src/app/files
+        - name: pingpong
+          image: heniko/pingpong:v2.1
+          volumeMounts:
+            - mountPath: /usr/src/app/pingpong-count
+              name: pingpong-count
         - name: logger
-          image: heniko/logger:v2.2
+          image: heniko/logger:v2.3
+          env:
+            - name: PORT
+              value: "3001"
           volumeMounts:
             - name: timestamp
               mountPath: /usr/src/app/files
+            - name: pingpong-count
+              mountPath: /usr/src/app/pingpong-count
