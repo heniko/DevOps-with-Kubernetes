@@ -18,7 +18,7 @@ spec:
             claimName: todo-claim
       containers:
         - name: todo
-          image: heniko/todo:v2
+          image: heniko/todo:v2.1
           volumeMounts:
             - name: daily-image
               mountPath: /usr/src/app/image
