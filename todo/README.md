@@ -74,3 +74,12 @@ $ kubectl apply -f manifests/service.yaml
 ```
 
 Navigating to [http://127.0.0.1:8082/](http://127.0.0.1:8082/) shows default Next.js app homepage.
+
+## Exercise 1.12
+
+Path to daily picture ```/api/daily-picture```. The image stays the same after executing commands:
+
+```
+$ kubectl delete -f manifests/
+$ kubectl apply -f manifests/
+```

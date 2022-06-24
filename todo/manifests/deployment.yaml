@@ -12,6 +12,13 @@ spec:
       labels:
         app: todo
     spec:
+      volumes:
+        - name: daily-image
+          persistentVolumeClaim:
+            claimName: todo-claim
       containers:
         - name: todo
-          image: heniko/todo:latest
+          image: heniko/todo:v2
+          volumeMounts:
+            - name: daily-image
+              mountPath: /usr/src/app/image
