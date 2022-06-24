@@ -1,6 +1,7 @@
 require('dotenv').config()
 const uuid = require('uuid')
 const express = require('express')
+const axios = require('axios')
 const fs = require('fs')
 const path = require('path')
 
@@ -11,20 +12,26 @@ const s = uuid.v4()
 const dir = path.join('/', 'usr', 'src', 'app', 'files')
 const stampPath = path.join(dir, 'timestamp')
 
-const pongPath = path.join('/', 'usr', 'src', 'app', 'pingpong-count', 'count')
-
-let getMessage = () => {
+let getMessage = async () => {
   let time = fs.readFileSync(stampPath)
-  let pongs = fs.readFileSync(pongPath)
+  let pongs = 0
+
+  try {
+    const response = await axios.get(`http://pingpong-svc:2345/pingpong`)
+    pongs = response.data
+  } catch (e) {
+    console.log(e)
+  }
+
   return `${time}: ${s}\nPing / Pongs: ${pongs}`
 }
 
-let interval = setInterval(() => {
-  console.log(getMessage())
+let interval = setInterval(async () => {
+  console.log(await getMessage())
 }, 5 * 1000)
 
-app.get('/', (req, res) => {
-  res.send(getMessage())
+app.get('/', async (req, res) => {
+  res.send(await getMessage())
 })
 
 app.listen(port, () => {

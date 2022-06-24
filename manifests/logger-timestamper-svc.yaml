@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: logger-timestamper-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: logger-timestamper-dep
+  ports:
+    - port: 2346
+      protocol: TCP
+      targetPort: 3001
+      name: logger-backend

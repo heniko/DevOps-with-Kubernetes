@@ -12,7 +12,7 @@ spec:
             path: /pingpong
             backend:
               service:
-                name: logger-timestamper-svc
+                name: pingpong-svc
                 port:
                   number: 2345
           - pathType: Prefix
