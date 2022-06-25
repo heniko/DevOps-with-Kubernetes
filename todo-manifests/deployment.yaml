@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-web
+spec:
+  selector:
+    matchLabels:
+      app: todo-web
+  template:
+    metadata:
+      labels:
+        app: todo-web
+    spec:
+      containers:
+        - name: todo-web
+          image: heniko/todo:v2.5
+          env:
+            - name: API_URI
+              value: "http://todo-server-svc:2346"
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 3000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-server
+spec:
+  selector:
+    matchLabels:
+      app: todo-server
+  template:
+    metadata:
+      labels:
+        app: todo-server
+    spec:
+      volumes:
+        - name: daily-image
+          persistentVolumeClaim:
+            claimName: todo-claim
+      containers:
+        - name: todo-server
+          image: heniko/todo-server:v2.1
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 3001
+          volumeMounts:
+            - name: daily-image
+              mountPath: /usr/src/app/image

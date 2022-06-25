@@ -1,25 +1,30 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import type { NextPage } from 'next'
-import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-
-const initialTodos = [
-  { id: 1, text: 'TODO 1' },
-  { id: 2, text: 'TODO 2' },
-]
+import { apiUri } from '../src/util/config'
+import { Todo } from '../src/types/todo'
+import { getAll, create } from '../src/services/todo'
 
 const Home: NextPage = () => {
-  const [todos, setTodos] = useState(initialTodos)
-  const [todo, setTodo] = useState('')
+  const [todos, setTodos] = useState<Todo[]>([])
+  const [todo, setTodo] = useState<string>('')
 
-  const getId = () => {
-    return Math.max(...todos.map(t => t.id)) + 1
-  }
+  useEffect(() => {
+    console.log(apiUri())
+    const fetchData = async () => {
+      const res = await getAll()
+      setTodos(res)
+    }
+    fetchData()
+  }, [])
 
-  const addTodo = () => {
+  const addTodo = async () => {
     if (todo) {
-      setTodos([...todos, { id: getId(), text: todo }])
+      const data = await create(todo)
+      if (todo) {
+        setTodos([...todos, data as Todo])
+      }
       setTodo('')
     }
   }
@@ -33,7 +38,8 @@ const Home: NextPage = () => {
 
   return (
     <div className={styles.container}>
-      <Image src='/api/daily-picture' width={400} height={400} alt='Daily image'></Image>
+      <img src={`${apiUri()}/api/daily-picture`} width={400} height={400} alt='Daily image'></img>
+      {/*<Image src={`${apiUri()}/api/daily-picture`} width={400} height={400} alt='Daily image'></Image>*/}
       <div>
         <input type='text' value={todo} onChange={onTodoChange} />
         <button type='button' onClick={addTodo}>Create TODO</button>
