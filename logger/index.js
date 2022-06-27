@@ -7,6 +7,7 @@ const path = require('path')
 
 const app = express()
 const port = process.env.PORT || 3000
+const message = process.env.MESSAGE || 'Hello default message!'
 const s = uuid.v4()
 
 const dir = path.join('/', 'usr', 'src', 'app', 'files')
@@ -23,7 +24,7 @@ let getMessage = async () => {
     console.log(e)
   }
 
-  return `${time}: ${s}\nPing / Pongs: ${pongs}`
+  return `${message}\n${time}: ${s}\nPing / Pongs: ${pongs}`
 }
 
 let interval = setInterval(async () => {

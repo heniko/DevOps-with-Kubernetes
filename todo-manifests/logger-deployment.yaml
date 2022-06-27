@@ -49,10 +49,15 @@ spec:
             - name: timestamp
               mountPath: /usr/src/app/files
         - name: logger
-          image: heniko/logger:v2.7
+          image: heniko/logger:v2.8
           env:
             - name: PORT
               value: "3001"
+            - name: MESSAGE
+              valueFrom:
+                configMapKeyRef:
+                  name: logger-configmap
+                  key: message
           volumeMounts:
             - name: timestamp
               mountPath: /usr/src/app/files
