@@ -30,7 +30,7 @@ let interval = setInterval(async () => {
   console.log(await getMessage())
 }, 5 * 1000)
 
-app.get('/', async (req, res) => {
+app.get('/logger', async (req, res) => {
   res.send(await getMessage())
 })
 

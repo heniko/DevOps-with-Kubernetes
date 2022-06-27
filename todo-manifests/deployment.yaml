@@ -1,7 +1,15 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: todo-namespace
+  labels:
+    name: todo-namespace
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: todo-web
+  namespace: todo-namespace
 spec:
   selector:
     matchLabels:
@@ -28,6 +36,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: todo-server
+  namespace: todo-namespace
 spec:
   selector:
     matchLabels:

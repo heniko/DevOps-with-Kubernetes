@@ -1,0 +1,58 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: logger-namespace
+  labels:
+    name: logger-namespace
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pingpong-dep
+  namespace: logger-namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pingpong-dep
+  template:
+    metadata:
+      labels:
+        app: pingpong-dep
+    spec:
+      containers:
+        - name: pingpong-app
+          image: heniko/pingpong:v2.2
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logger-timestamper-dep
+  namespace: logger-namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: logger-timestamper-dep
+  template:
+    metadata:
+      labels:
+        app: logger-timestamper-dep
+    spec:
+      volumes:
+        - name: timestamp
+          emptyDir: {}
+      containers:
+        - name: timestamper
+          image: heniko/timestamper:v2.1
+          volumeMounts:
+            - name: timestamp
+              mountPath: /usr/src/app/files
+        - name: logger
+          image: heniko/logger:v2.7
+          env:
+            - name: PORT
+              value: "3001"
+          volumeMounts:
+            - name: timestamp
+              mountPath: /usr/src/app/files

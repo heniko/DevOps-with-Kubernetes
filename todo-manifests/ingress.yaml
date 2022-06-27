@@ -2,12 +2,27 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: todo-ingress
+  namespace: todo-namespace
   labels:
     name: todo-ingress
 spec:
   rules:
     - http:
         paths:
+          - pathType: Prefix
+            path: /pingpong
+            backend:
+              service:
+                name: pingpong-svc
+                port:
+                  number: 2345
+          - pathType: Prefix
+            path: /logger
+            backend:
+              service:
+                name: logger-timestamper-svc
+                port:
+                  number: 2346
           - pathType: Prefix
             path: /api
             backend:
@@ -22,3 +37,29 @@ spec:
                 name: todo-web-svc
                 port:
                   number: 2345
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: logger-ingress
+  namespace: logger-namespace
+  labels:
+    name: logger-ingress
+spec:
+  rules:
+    - http:
+        paths:
+          - pathType: Prefix
+            path: /pingpong
+            backend:
+              service:
+                name: pingpong-svc
+                port:
+                  number: 2345
+          - pathType: Prefix
+            path: /logger
+            backend:
+              service:
+                name: logger-timestamper-svc
+                port:
+                  number: 2346
