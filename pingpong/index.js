@@ -1,14 +1,16 @@
 require('dotenv').config()
 const express = require('express')
+const { PrismaClient } = require('@prisma/client')
+
+const prisma = new PrismaClient()
 
 const app = express()
 const port = process.env.PORT || 3000
 
-let count = 0
-
-app.get('/pingpong', (req, res) => {
+app.get('/pingpong', async (req, res) => {
+  let count = await prisma.ping.count()
   res.send(`${count}`)
-  count += 1
+  await prisma.ping.create({ data: {} })
 })
 
 app.listen(port, () => {

@@ -1,1 +1,4 @@
 */node_modules
+*logger-db-secret.yaml
+*todo-db-secret.yaml
+*key.txt
