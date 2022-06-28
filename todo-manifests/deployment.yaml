@@ -45,7 +45,7 @@ spec:
             claimName: todo-claim
       containers:
         - name: todo-server
-          image: heniko/todo-server:v2.3
+          image: heniko/todo-server:v2.5
           env:
             - name: DATABASE_URL
               valueFrom:
