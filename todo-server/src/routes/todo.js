@@ -1,22 +1,21 @@
 const todoRouter = require('express').Router()
 
-let todos = [
-  { id: 1, text: 'TODO 1' },
-  { id: 2, text: 'TODO 2' }
-]
-
-todoRouter.get('/', (req, res) => {
-  res.json(todos)
+todoRouter.get('/', async (req, res) => {
+  try {
+    const todos = await req.prisma.todo.findMany()
+    res.json(todos)
+  } catch (err) {
+    res.status(400).json(err.message)
+  }
 })
 
-todoRouter.post('/', (req, res) => {
+todoRouter.post('/', async (req, res) => {
   try {
-    const text = req.body.text
-    const id = Math.max(...todos.map(todo => todo.id)) + 1
-    const todo = {
-      id, text
-    }
-    todos.push(todo)
+    const todo = await req.prisma.todo.create({
+      data: {
+        text: req.body.text,
+      }
+    })
     res.json(todo)
   } catch (err) {
     res.status(400).send(err.message)
