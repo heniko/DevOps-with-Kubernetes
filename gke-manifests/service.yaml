@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pingpong-lb
+spec:
+  type: LoadBalancer
+  selector:
+    app: pingpong-dep
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 3000

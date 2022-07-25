@@ -1,5 +1,6 @@
 */node_modules
 *logger-db-secret.yaml
 *todo-db-secret.yaml
+*logger-gke-db-secret.yaml
 *key.txt
 *.env*

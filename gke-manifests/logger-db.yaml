@@ -1,55 +1,52 @@
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: todo-namespace
-  name: todo-db-svc
+  name: logger-db-svc
   labels:
-    app: todo-postgres
+    app: logger-postgres
 spec:
   ports:
     - port: 5432
       name: web
   clusterIP: None
   selector:
-    app: todo-db-ss
+    app: logger-db-ss
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  namespace: todo-namespace
-  name: todo-db-ss
+  name: logger-db-ss
 spec:
-  serviceName: todo-postgres
-  replicas: 1
+  serviceName: logger-postgres
   selector:
     matchLabels:
-      app: todo-db-ss
+      app: logger-db-ss
   template:
     metadata:
       labels:
-        app: todo-db-ss
+        app: logger-db-ss
     spec:
       containers:
-        - name: todo-postgres-ss
+        - name: logger-postgres-ss
           image: postgres:latest
           ports:
-            - name: todo-postgres
+            - name: logger-postgres
               containerPort: 5432
           env:
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   key: DATABASE_PASSWORD
-                  name: todo-db-secret
+                  name: logger-db-secret
           volumeMounts:
             - name: data
               mountPath: /var/lib/postgresql/data
+              subPath: postgres
   volumeClaimTemplates:
     - metadata:
         name: data
       spec:
         accessModes: ["ReadWriteOnce"]
-        storageClassName: local-path
         resources:
           requests:
             storage: 100Mi

@@ -4,7 +4,7 @@ metadata:
   namespace: logger-namespace
   name: logger-db-svc
   labels:
-    app: loggter-postgres
+    app: logger-postgres
 spec:
   ports:
     - port: 5432
