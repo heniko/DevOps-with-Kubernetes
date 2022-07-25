@@ -13,6 +13,10 @@ app.get('/pingpong', async (req, res) => {
   await prisma.ping.create({ data: {} })
 })
 
+app.get('/', (req, res) => {
+  res.send('ok')
+})
+
 app.listen(port, () => {
   console.log(`Ping-pong running on port ${port}`)
 })

@@ -14,14 +14,63 @@ spec:
     spec:
       containers:
         - name: pingpong-app
-          image: heniko/pingpong:v2.4
+          image: heniko/pingpong:v3.1
           resources:
             limits:
               memory: "128Mi"
-              cpu: "500m"
+              cpu: "200m"
           env:
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
                   name: logger-db-secret
                   key: DATABASE_URL
+          ports:
+            - containerPort: 3000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logger-timestamper-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: logger-timestamper-dep
+  template:
+    metadata:
+      labels:
+        app: logger-timestamper-dep
+    spec:
+      volumes:
+        - name: timestamp
+          emptyDir: {}
+      containers:
+        - name: timestamper
+          image: heniko/timestamper:v2.1
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "200m"
+          volumeMounts:
+            - name: timestamp
+              mountPath: /usr/src/app/files
+        - name: logger
+          image: heniko/logger:v3.3
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "200m"
+          env:
+            - name: PORT
+              value: "3001"
+            - name: MESSAGE
+              valueFrom:
+                configMapKeyRef:
+                  name: logger-configmap
+                  key: message
+          volumeMounts:
+            - name: timestamp
+              mountPath: /usr/src/app/files
+          ports:
+            - containerPort: 3001

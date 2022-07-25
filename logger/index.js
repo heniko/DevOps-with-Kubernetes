@@ -18,7 +18,7 @@ let getMessage = async () => {
   let pongs = 0
 
   try {
-    const response = await axios.get(`http://pingpong-svc:2345/pingpong`)
+    const response = await axios.get(`http://pingpong-svc/pingpong`)
     pongs = response.data
   } catch (e) {
     console.log(e)
@@ -33,6 +33,10 @@ let interval = setInterval(async () => {
 
 app.get('/logger', async (req, res) => {
   res.send(await getMessage())
+})
+
+app.get('/', async (req, res) => {
+  res.send('ok')
 })
 
 app.listen(port, () => {
