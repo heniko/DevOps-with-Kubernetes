@@ -4,6 +4,8 @@ metadata:
   name: todo-server
   namespace: todo-namespace
 spec:
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: todo-server
