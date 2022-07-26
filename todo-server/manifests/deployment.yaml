@@ -35,11 +35,3 @@ spec:
             - name: daily-image
               mountPath: /usr/src/app/image
               subPath: image
-  volumeClaimTemplates:
-    - metadata:
-        name: data
-      spec:
-        accessModes: ["ReadWriteOnce"]
-        resources:
-          requests:
-            storage: 100Mi
