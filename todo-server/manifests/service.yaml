@@ -4,8 +4,9 @@ metadata:
   namespace: todo-namespace
   name: todo-server-svc
 spec:
+  type: NodePort
   selector:
     app: todo-server
   ports:
-    - port: 2346
+    - port: 80
       targetPort: 3001
