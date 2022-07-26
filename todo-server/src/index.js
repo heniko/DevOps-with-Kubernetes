@@ -6,6 +6,7 @@ const { PrismaClient } = require('@prisma/client')
 const app = express()
 
 const port = process.env.PORT || 3001
+const prisma = new PrismaClient()
 
 app.use(express.json())
 app.use(cors())
@@ -16,7 +17,6 @@ app.use((req, res, next) => {
 })
 
 app.use((req, res, next) => {
-  const prisma = new PrismaClient()
   req.prisma = prisma
   next()
 })
