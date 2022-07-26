@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-server
+  namespace: todo-namespace
+spec:
+  selector:
+    matchLabels:
+      app: todo-server
+  template:
+    metadata:
+      labels:
+        app: todo-server
+    spec:
+      volumes:
+        - name: daily-image
+          persistentVolumeClaim:
+            claimName: todo-claim
+      containers:
+        - name: todo-server
+          image: gcr.io/PROJECT_ID/IMAGE
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: todo-db-secret
+                  key: DATABASE_URL
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "200m"
+          ports:
+            - containerPort: 3001
+          volumeMounts:
+            - name: daily-image
+              mountPath: /usr/src/app/image
