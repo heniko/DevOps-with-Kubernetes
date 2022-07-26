@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - kustomize-manifests/deployment.yaml
+  - kustomize-manifests/service.yaml
+images:
+  - name: gcr.io/PROJECT_ID/IMAGE
+    newName: heniko/todo-server

@@ -1,0 +1,13 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: logger-namespace
+  labels:
+    name: logger-namespace
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: todo-namespace
+  labels:
+    name: todo-namespace

@@ -4,3 +4,4 @@
 *logger-gke-db-secret.yaml
 *key.txt
 *.env*
+*private-key.json
