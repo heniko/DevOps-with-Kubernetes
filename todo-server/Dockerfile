@@ -8,4 +8,4 @@ RUN npm ci
 
 COPY . .
 
-CMD ["bash", "./startup.sh"]
+CMD ["sh", "-c", "npx prisma generate && npx prisma migrate deploy && npm start"]
