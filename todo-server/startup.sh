@@ -1,2 +1,3 @@
-npx prisma migrate deploy
+prisma generate
+prisma migrate deploy
 npm start
