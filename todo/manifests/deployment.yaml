@@ -1,24 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: todo
+  name: todo-web
+  namespace: todo-namespace
 spec:
-  replicas: 1
   selector:
     matchLabels:
-      app: todo
+      app: todo-web
   template:
     metadata:
       labels:
-        app: todo
+        app: todo-web
     spec:
-      volumes:
-        - name: daily-image
-          persistentVolumeClaim:
-            claimName: todo-claim
       containers:
-        - name: todo
-          image: heniko/todo:v2.1
-          volumeMounts:
-            - name: daily-image
-              mountPath: /usr/src/app/image
+        - name: todo-web
+          image: gcr.io/PROJECT_ID/IMAGE
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "200m"
+          ports:
+            - containerPort: 3000
