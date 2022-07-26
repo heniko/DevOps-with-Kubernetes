@@ -38,7 +38,7 @@ const Home: NextPage = () => {
 
   return (
     <div className={styles.container}>
-      <img src={`${apiUri()}/api/daily-picture`} width={400} height={400} alt='Daily image'></img>
+      <img src='/api/daily-picture' width={400} height={400} alt='Daily image'></img>
       {/*<Image src={`${apiUri()}/api/daily-picture`} width={400} height={400} alt='Daily image'></Image>*/}
       <div>
         <input type='text' value={todo} onChange={onTodoChange} />
