@@ -8,4 +8,4 @@ RUN npm ci
 
 COPY . .
 
-CMD ["./startup.sh"]
+CMD ["bash", "./startup.sh"]

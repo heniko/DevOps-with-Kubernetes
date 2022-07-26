@@ -27,6 +27,10 @@ app.use('/api/todos', todoRouter)
 const dailyPictureRouter = require('./routes/daily-picture')
 app.use('/api/daily-picture', dailyPictureRouter)
 
+app.get('/', (req, res) => {
+  res.send('ok')
+})
+
 app.listen(port, () => {
   console.log(`TODO-server running on port ${port}`)
 })
